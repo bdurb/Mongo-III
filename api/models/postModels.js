@@ -3,15 +3,18 @@ const mongoose = require('mongoose');
 
 // setting up the Schema for Posts using mongoose.Schema.
 const PostSchema = new mongoose.Schema ({
-  _parent: {
-    type: Number,
-    ref: 'User'
-  },
+
   title: {
     type: String,
     required: true,
   },
   author: {
-    
-  }
+    name: String,
+    _id: { type: String, ref: 'User' },
+
+  },
+  content: String,
+  comments: [
+    {text: String, author: String},
+  ]
 })
