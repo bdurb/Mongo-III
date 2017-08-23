@@ -26,16 +26,18 @@ const getUser = (req, res) => {
   const { username, password } = req.body;
 
   // find the user the client has asked for
-  User.findOne(({ username, password }) => {
-
-  }).exec()
-  .then((user) => {
+  User.findOne({ username, password }, (err, user) => {
+    if (err) {
+      res.status(STATUS_USER_ERROR);
+      res.json(err);
+      return;
+    }
+    if (!user) {
+      res.status(STATUS_USER_ERROR);
+      res.json(err);
+      return;
+    }
     res.json(user);
-  })
-  // if not, catch any error
-  .catch((err) => {
-    res.status(STATUS_USER_ERROR);
-    res.json(err);
   });
 };
 
